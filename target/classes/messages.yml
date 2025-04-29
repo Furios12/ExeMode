@@ -1,0 +1,28 @@
+# ExeMode Messages 1.0.0 Development by Exestudios
+
+  #████████████████████████████████████████████
+  #█▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
+  #██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
+  #▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀
+
+Config Version: 1.0.0
+
+no-player: "§cQuesto comando può essere eseguito solo da un giocatore!"
+no-permission: "&c[ExeMode] Non hai il permesso di usare questo comando!"
+gamemode-creative: "§aModalità di gioco cambiata in creativa!"
+gamemode-survival: "§aModalità di gioco cambiata in sopravvivenza!"
+gamemode-adventure: "§aModalità di gioco cambiata in avventura!"
+gamemode-spectator: "§aModalità di gioco cambiata in spettatore!"
+
+ban.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+ban.message: "&c&l✘ Sei stato bannato dal server ✘\n&r\n&7Bannato da: &c%banner%\n&7Motivo: &c%reason%\n&7Data: &c%date%\n&r\n&7Contatta il nostro staff per un appello"
+ban.broadcast: "&c[ExeMode] &7%player% è stato bannato da %banner%"
+ban.broadcast-reason: "&c[ExeMode] &7Motivo: &c%reason%"
+ban.error: "&c[ExeMode] Errore durante il salvataggio del ban!"
+ban.usage: "&c[ExeMode] Utilizzo: /exban <giocatore> <motivo>"
+
+unban.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+unban.usage: "&c[ExeMode] Utilizzo: /exeunban <giocatore>"
+unban.not-banned: "&c[ExeMode] Questo giocatore non è bannato!"
+unban.broadcast: "&a[ExeMode] &7%player% è stato sbannato da %unbanner%"
+unban.error: "&c[ExeMode] Errore durante il salvataggio dell'unban!"

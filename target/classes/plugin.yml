@@ -1,0 +1,53 @@
+name: ExeMode
+version: '1.0-SNAPSHOT-BETA'
+main: org.Exestudios.exeMode.ExeMode
+api-version: '1.21'
+authors: [Exestudios]
+description: A plugin for gamemode management
+
+commands:
+  exc:
+    description: Switch to creative mode
+    usage: /<command>
+    permission: exemode.creative
+  exa:
+    description: Switch to adventure mode
+    usage: /<command>
+    permission: exemode.adventure
+  exs:
+    description: Switch to survival mode
+    usage: /<command>
+    permission: exemode.survival
+  exsp:
+    description: Switch to spectator mode
+    usage: /<command>
+    permission: exemode.spectator
+  exe:
+    description: Help command
+    usage: /<command>
+  exeban:
+    description: Banna un giocatore dal server
+    usage: /exban <giocatore> <motivo>
+    permission: exemode.ban
+    permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+    aliases: [eban, banplayer]
+  exeunban:
+    description: Unbanna un giocatore dal server
+    usage: /unexban <giocatore> <motivo>
+    permission: exemode.unban
+    permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+    aliases: [ eunban, unbanplayer ]
+
+permissions:
+  exemode.creative:
+    description: Allows using creative mode command
+    default: op
+  exemode.adventure:
+    description: Allows using adventure mode command
+    default: op
+  exemode.survival:
+    description: Allows using survival mode command
+    default: op
+  exemode.spectator:
+    description: Allows using spectator mode command
+    default: op

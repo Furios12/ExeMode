@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ExeMode:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ExeMode_jar</output-path>
+    <root id="archive" name="ExeMode.jar">
+      <element id="module-output" name="ExeMode" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
