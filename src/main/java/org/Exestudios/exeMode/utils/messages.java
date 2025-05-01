@@ -25,7 +25,7 @@ public class messages {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    // Metodo utile per debug
+
     public static boolean exists(String path) {
         return messages.contains(path);
     }

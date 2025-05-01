@@ -23,13 +23,13 @@ public class exeunban implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        // Controllo permessi
+
         if (!sender.hasPermission("exemode.unban")) {
             sender.sendMessage(messages.get("unban.no-permission"));
             return true;
         }
 
-        // Controllo argomenti
+
         if (args.length < 1) {
             sender.sendMessage(messages.get("unban.usage"));
             return true;
@@ -45,19 +45,21 @@ public class exeunban implements CommandExecutor {
 
         FileConfiguration banConfig = YamlConfiguration.loadConfiguration(banFile);
 
-        // Controlla se il giocatore è effettivamente bannato
+
         if (!banConfig.getBoolean(targetPlayer + ".banned", false)) {
             sender.sendMessage(messages.get("unban.not-banned"));
             return true;
         }
 
-        // Rimuove il ban
+
         banConfig.set(targetPlayer + ".banned", false);
 
         try {
             banConfig.save(banFile);
 
-            // Invia il messaggio di successo
+            sender.sendMessage(messages.get("unban.success")
+                    .replace("%player%", targetPlayer)
+                    .replace("%unbanner%", sender.getName()));
             String unbanMessage = messages.get("unban.broadcast")
                     .replace("%player%", targetPlayer)
                     .replace("%unbanner%", sender.getName());

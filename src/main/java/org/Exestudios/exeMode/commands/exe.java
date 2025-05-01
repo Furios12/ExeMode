@@ -17,7 +17,7 @@ public class exe implements CommandExecutor {
             §e/exsp §7- Switch to spectator mode
             §e/exeban §7- Ban a player
             §e/exeunban §7- unban a player
-            §e/exekick §7- kick a player
+            §e/exekick §7- kick a player(Not implemented yet)
             §6§l====================
             """);
         return true;

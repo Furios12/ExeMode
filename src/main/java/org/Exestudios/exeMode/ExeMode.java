@@ -6,22 +6,66 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.Exestudios.exeMode.events.PlayerJoinBanCheck;
 import org.Exestudios.exeMode.utils.messages;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
-import java.io.File;
+
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.net.URI;
 
 public final class ExeMode extends JavaPlugin {
 
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
 
+
+    private void logColored(String message) {
+        getLogger().info(message + ANSI_RESET);
+    }
+
+    private static final String CURRENT_VERSION = "1.0.0";
+    private static final String GITHUB_API_URL = "https://api.github.com/repos/Furios12/ExeMode/releases/latest";
+    private UpdateResult lastUpdateResult;
+    private long lastUpdateCheck;
+    private static final long UPDATE_CHECK_INTERVAL = TimeUnit.HOURS.toMillis(1); // Controlla ogni ora
+
+    private record UpdateResult(boolean updateAvailable, String latestVersion, String downloadUrl) {
+    }
 
     @Override
     public void onEnable() {
-        getLogger().info("""
+        logColored(ANSI_CYAN + """
             -
             █▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
             ██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
             ▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀""");
-        getLogger().info("ExeMode 1.0.0 Loading Commands Protocol...");
+
+        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Checking for updates...");
+        checkUpdates(null, false);
+
+        logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Commands Protocol...");
+        registerCommands();
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
+
+        setupMessagesAndChecks();
+        setupEvents();
+
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Ready to use!");
+        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
+    }
+
+    private void registerCommands() {
+        getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol...");
         Objects.requireNonNull(this.getCommand("exc")).setExecutor(new exc());
         Objects.requireNonNull(this.getCommand("exa")).setExecutor(new exa());
         Objects.requireNonNull(this.getCommand("exsp")).setExecutor(new exsp());
@@ -29,55 +73,153 @@ public final class ExeMode extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("exe")).setExecutor(new exe());
         Objects.requireNonNull(this.getCommand("exeban")).setExecutor(new exeban(this));
         Objects.requireNonNull(this.getCommand("exeunban")).setExecutor(new exeunban(this));
-        getLogger().info("ExeMode 1.0.0 Loading Commands Protocol... Done!");
-        getLogger().info("ExeMode 1.0.0 Starting checking updates for messages.yml...");
-        checkMessageVersion();
-        getLogger().info("ExeMode 1.0.0 Starting checking updates for messages.yml... Done!");
-        getLogger().info("ExeMode 1.0.0 Loading Messages Protocol...");
-        messages.init(this);
-        // Debug dei messaggi
-getLogger().info("Verifica dei messaggi necessari:");
-String[] messaggiRichiesti = {
-    "ban.message",
-    "ban.broadcast",
-    "ban.broadcast-reason"
-};
-
-for (String path : messaggiRichiesti) {
-    if (messages.exists(path)) {
-        getLogger().info("✓ " + path + " trovato");
-    } else {
-        getLogger().warning("✗ " + path + " mancante!");
+        Objects.requireNonNull(this.getCommand("exeupdate")).setExecutor(new exeupdate(this));
+        getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
     }
-}
-        getLogger().info("ExeMode 1.0.0 Loading Messages Protocol... Done!");
-        getLogger().info("ExeMode 1.0.0 Loading Events Protocol...");
+
+    private void setupMessagesAndChecks() {
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Checking updates for messages.yml...");
+        checkMessageVersion();
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Checking updates for messages.yml... Done!");
+        
+        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Messages Protocol...");
+        messages.init(this);
+        verifyRequiredMessages();
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Messages Protocol... Done!");
+    }
+
+    private void setupEvents() {
+        logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol...");
         getServer().getPluginManager().registerEvents(new PlayerJoinBanCheck(this), this);
-        getLogger().info("ExeMode 1.0.0 Loading Events Protocol... Done!");
-        getLogger().info("ExeMode 1.0.0 Loading Extensions Protocol...");
-        getLogger().info("ExeMode 1.0.0 Extensions active: ChatColor, EssentialsChat ");
-        getLogger().info("ExeMode 1.0.0 Ready to use!");
-        getLogger().info("ExeMode 1.0.0 Developed by Exestudios");
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol... Done!");
+        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions Protocol...");
+        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
+    }
+
+    public void checkUpdates(Player player, boolean force) {
+
+        if (!force && System.currentTimeMillis() - lastUpdateCheck < UPDATE_CHECK_INTERVAL && lastUpdateResult != null) {
+            if (player != null) {
+                sendUpdateMessage(player, lastUpdateResult);
+            }
+            return;
+        }
+
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                UpdateResult result = performUpdateCheck();
+                lastUpdateResult = result;
+                lastUpdateCheck = System.currentTimeMillis();
+
+                if (player != null) {
+                    getServer().getScheduler().runTask(this, () -> sendUpdateMessage(player, result));
+                } else if (result.updateAvailable) {
+                    logUpdateAvailable(result);
+                }
+            } catch (Exception e) {
+                getLogger().warning("Errore durante il controllo degli aggiornamenti: " + e.getMessage());
+                if (player != null) {
+                    player.sendMessage(ChatColor.RED + "Errore durante il controllo degli aggiornamenti. Controlla la console per i dettagli.");
+                }
+            }
+        });
+    }
+
+    private UpdateResult performUpdateCheck() throws Exception {
+        URI uri = URI.create(GITHUB_API_URL);
+        HttpURLConnection conn = (HttpURLConnection) uri.toURL().openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+
+        if (conn.getResponseCode() != 200) {
+            throw new IOException("Impossibile controllare gli aggiornamenti. Codice risposta: " + conn.getResponseCode());
+        }
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(response.toString());
+            String latestVersion = ((String) json.get("tag_name")).replaceAll("^v", "");
+            String downloadUrl = (String) json.get("html_url");
+
+            boolean updateAvailable = !CURRENT_VERSION.equals(latestVersion);
+            return new UpdateResult(updateAvailable, latestVersion, downloadUrl);
+        }
+    }
+
+    private void sendUpdateMessage(Player player, UpdateResult result) {
+        if (result.updateAvailable) {
+            player.sendMessage(ChatColor.GREEN + "=================================");
+            player.sendMessage(ChatColor.YELLOW + "È disponibile un nuovo aggiornamento!");
+            player.sendMessage(ChatColor.YELLOW + "Versione attuale: " + ChatColor.RED + CURRENT_VERSION);
+            player.sendMessage(ChatColor.YELLOW + "Nuova versione: " + ChatColor.GREEN + result.latestVersion);
+            player.sendMessage(ChatColor.YELLOW + "Scaricalo da: " + ChatColor.AQUA + result.downloadUrl);
+            player.sendMessage(ChatColor.GREEN + "=================================");
+        } else {
+            player.sendMessage(ChatColor.GREEN + "Il plugin è aggiornato all'ultima versione!");
+        }
+    }
+
+    private void logUpdateAvailable(UpdateResult result) {
+        logColored(ANSI_YELLOW + "=================================");
+        logColored(ANSI_YELLOW + "A new update is available!");
+        logColored(ANSI_RED + "Current version: " + CURRENT_VERSION);
+        logColored(ANSI_GREEN + "New version: " + result.latestVersion());
+        logColored(ANSI_CYAN + "Download at: " + result.downloadUrl());
+        logColored(ANSI_YELLOW + "=================================");
+    }
+
+    private void verifyRequiredMessages() {
+        logColored(ANSI_BLUE + "Checking required messages:");
+        String[] requiredMessages = {
+            "ban.message",
+            "ban.broadcast",
+            "ban.broadcast-reason"
+        };
+
+        for (String path : requiredMessages) {
+            if (messages.exists(path)) {
+                logColored(ANSI_GREEN + "✓ " + path + " found");
+            } else {
+                logColored(ANSI_RED + "✗ " + path + " missing!");
+            }
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        logColored(ANSI_CYAN + """
+            -
+            █▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
+            ██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
+            ▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀""");
+        
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Commands Protocol...");
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Messages Protocol...");
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Protocol system...");
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Closing Protocol system... Done!");
+        logColored(ANSI_RED + "ExeMode " + CURRENT_VERSION + " Closed!");
+        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
     }
 
     private void checkMessageVersion() {
         File messagesFile = new File(getDataFolder(), "messages.yml");
         FileConfiguration messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
 
-        // Versione attuale del file messages.yml
         String currentVersion = "1.0.0";
 
-        // Controlla se il file esiste e leggi la sua versione
         if (messagesFile.exists()) {
             String fileVersion = messagesConfig.getString("Config Version");
 
-            // Se la versione è diversa, sostituisci il file
             if (fileVersion == null || !fileVersion.equals(currentVersion)) {
                 getLogger().info("Rilevata una versione diversa del file messages.yml. Aggiornamento in corso...");
 
-                // Elimina il vecchio file e verifica il risultato
                 if (messagesFile.delete()) {
-                    // Salva la nuova versione del file
                     saveResource("messages.yml", true);
                     getLogger().info("File messages.yml aggiornato alla versione " + currentVersion);
                 } else {
@@ -85,20 +227,5 @@ for (String path : messaggiRichiesti) {
                 }
             }
         }
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("""
-            -
-            █▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
-            ██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
-            ▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀""");
-        getLogger().info("ExeMode 1.0.0 Closing Commands Protocol...");
-        getLogger().info("ExeMode 1.0.0 Closing Messages Protocol...");
-        getLogger().info("ExeMode 1.0.0 Closing Protocol system...");
-        getLogger().info("ExeMode 1.0.0 Closing Protocol system... Done!");
-        getLogger().info("ExeMode 1.0.0 Closed!");
-        getLogger().info("ExeMode 1.0.0 Developed by Exestudios");
     }
 }
