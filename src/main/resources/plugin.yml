@@ -41,6 +41,10 @@ commands:
     description: Check for updates
     usage: /<command> [force]
     permission: exemode.update
+  exekick:
+    description: Espelle un giocatore dal server
+    usage: /exekick <giocatore> <motivo>
+    permission: exemode.kick
 
 
 permissions:
@@ -58,4 +62,13 @@ permissions:
     default: op
   exemode.update:
     description: Allows using update command
+    default: op
+  exemode.ban:
+    description: Allows using ban command
+    default: op
+  exemode.unban:
+    description: Allows using unban command
+    default: op
+  exemode.kick:
+    description: Allows using kick command
     default: op

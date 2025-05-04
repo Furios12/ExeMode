@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.Exestudios.exeMode.events.PlayerJoinBanCheck;
+import org.Exestudios.exeMode.events.PlayerConnectionListener;
 import org.Exestudios.exeMode.utils.messages;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,7 +34,7 @@ public final class ExeMode extends JavaPlugin {
         getLogger().info(message + ANSI_RESET);
     }
 
-    private static final String CURRENT_VERSION = "1.0.0";
+    private static final String CURRENT_VERSION = "1.0.1";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/Furios12/ExeMode/releases/latest";
     private UpdateResult lastUpdateResult;
     private long lastUpdateCheck;
@@ -74,6 +75,7 @@ public final class ExeMode extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("exeban")).setExecutor(new exeban(this));
         Objects.requireNonNull(this.getCommand("exeunban")).setExecutor(new exeunban(this));
         Objects.requireNonNull(this.getCommand("exeupdate")).setExecutor(new exeupdate(this));
+        Objects.requireNonNull(this.getCommand("exekick")).setExecutor(new exekick(this));
         getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
     }
 
@@ -91,6 +93,7 @@ public final class ExeMode extends JavaPlugin {
     private void setupEvents() {
         logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol...");
         getServer().getPluginManager().registerEvents(new PlayerJoinBanCheck(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol... Done!");
         logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions Protocol...");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
