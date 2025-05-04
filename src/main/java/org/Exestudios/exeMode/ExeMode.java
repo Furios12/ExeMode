@@ -38,7 +38,7 @@ public final class ExeMode extends JavaPlugin {
     private static final String GITHUB_API_URL = "https://api.github.com/repos/Furios12/ExeMode/releases/latest";
     private UpdateResult lastUpdateResult;
     private long lastUpdateCheck;
-    private static final long UPDATE_CHECK_INTERVAL = TimeUnit.HOURS.toMillis(1); // Controlla ogni ora
+    private static final long UPDATE_CHECK_INTERVAL = TimeUnit.HOURS.toMillis(1);
 
     private record UpdateResult(boolean updateAvailable, String latestVersion, String downloadUrl) {
     }
