@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.Exestudios.exeMode.events.PlayerJoinBanCheck;
 import org.Exestudios.exeMode.events.PlayerConnectionListener;
 import org.Exestudios.exeMode.utils.messages;
+import org.Exestudios.exeMode.utils.WarnManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.bukkit.ChatColor;
@@ -29,6 +30,7 @@ public final class ExeMode extends JavaPlugin {
     private static final String ANSI_PURPLE = "\u001B[35m";
     private static final String ANSI_CYAN = "\u001B[36m";
 
+    private WarnManager warnManager;
 
     private void logColored(String message) {
         getLogger().info(message + ANSI_RESET);
@@ -60,6 +62,7 @@ public final class ExeMode extends JavaPlugin {
 
         setupMessagesAndChecks();
         setupEvents();
+        this.warnManager = new WarnManager(this);
 
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Ready to use!");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
@@ -72,10 +75,13 @@ public final class ExeMode extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("exsp")).setExecutor(new exsp());
         Objects.requireNonNull(this.getCommand("exs")).setExecutor(new exs());
         Objects.requireNonNull(this.getCommand("exe")).setExecutor(new exe());
+        Objects.requireNonNull(this.getCommand("exesmg")).setExecutor(new exesmg());
         Objects.requireNonNull(this.getCommand("exeban")).setExecutor(new exeban(this));
         Objects.requireNonNull(this.getCommand("exeunban")).setExecutor(new exeunban(this));
         Objects.requireNonNull(this.getCommand("exeupdate")).setExecutor(new exeupdate(this));
         Objects.requireNonNull(this.getCommand("exekick")).setExecutor(new exekick(this));
+        Objects.requireNonNull(this.getCommand("exewarn")).setExecutor(new exewarn(this));
+        Objects.requireNonNull(this.getCommand("exeunwarn")).setExecutor(new exeunwarn(this));
         getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
     }
 
@@ -205,6 +211,11 @@ public final class ExeMode extends JavaPlugin {
         logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Commands Protocol...");
         logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Messages Protocol...");
         logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Protocol system...");
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Saving warn file...");
+        if (warnManager != null) {
+            warnManager.saveWarnFile();
+        }
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Saving warn file... Done!");
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Closing Protocol system... Done!");
         logColored(ANSI_RED + "ExeMode " + CURRENT_VERSION + " Closed!");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
@@ -214,7 +225,7 @@ public final class ExeMode extends JavaPlugin {
         File messagesFile = new File(getDataFolder(), "messages.yml");
         FileConfiguration messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
 
-        String currentVersion = "1.0.0";
+        String currentVersion = CURRENT_VERSION;
 
         if (messagesFile.exists()) {
             String fileVersion = messagesConfig.getString("Config Version");
@@ -230,5 +241,9 @@ public final class ExeMode extends JavaPlugin {
                 }
             }
         }
+    }
+
+    public WarnManager getWarnManager() {
+        return warnManager;
     }
 }

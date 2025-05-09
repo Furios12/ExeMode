@@ -19,9 +19,9 @@ public class exe implements CommandExecutor {
             §e/exeunban §7- unban a player
             §e/exekick §7- kick a player
             §e/exemute §7- execute a command as a player(not implemented yet)
-            §e/exewarn §7- warn a player(not implemented yet)
+            §e/exewarn §7- warn a player
             §e/exemsg §7- send a message to a player(not implemented yet)
-            §e/exeunwarn §7- unwarn a player(not implemented yet)
+            §e/exeunwarn §7- unwarn a player
             §e/exeunmute §7- unmute a player(not implemented yet)
             §6§l====================
             """);

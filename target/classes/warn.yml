@@ -1,0 +1,18 @@
+# ExeMode Warn System
+
+#████████████████████████████████████████████
+#█▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
+#██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
+#▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀
+
+
+# Formato:
+# players:
+#   uuid:
+#     name: playerName
+#     total: numeroWarn
+#     warns:
+#       - "Staff: staffName, Motivo: reason, Data: date"
+Version: 1.0.1
+
+players: {}

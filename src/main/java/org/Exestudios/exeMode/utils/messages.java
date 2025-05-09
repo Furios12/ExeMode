@@ -21,7 +21,7 @@ public class messages {
     }
     
     public static String get(String path) {
-        String message = messages.getString(path, "&4&lErrore(Missing Message): " + path);
+        String message = messages.getString(path, "&4&lErrore Messaggio non trovato(Missing Message): " + path);
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 

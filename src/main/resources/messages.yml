@@ -26,6 +26,7 @@ unban.usage: "&c[ExeMode] Utilizzo: /exeunban <giocatore>"
 unban.not-banned: "&c[ExeMode] Questo giocatore non è bannato!"
 unban.broadcast: "&a[ExeMode] &7%player% è stato sbannato da %unbanner%"
 unban.error: "&c[ExeMode] Errore durante il salvataggio dell'unban!"
+unban.success: "&a[ExeMode] Giocatore sbannato con successo!"
 
 kick.no-permission: "§c§lNon hai il permesso di utilizzare questo comando!"
 kick.usage: "§c§lUso: /exekick <giocatore> <motivo>"
@@ -33,4 +34,6 @@ kick.player-not-found: "§c§lGiocatore non trovato!"
 kick.message: "§c§lSei stato espulso dal server!\n§r§7Espulso da: %kicker%\n§7Motivo: %reason%\n§7Data: %date%"
 kick.broadcast: "§c§lIl giocatore %player% è stato espulso da %kicker%"
 kick.broadcast-reason: "§7Motivo: %reason%"
-join-message: "&d&l+ [ %player% ]" # Placeholder player: %player%
+
+player.join: "&d&l+ [ %player% ]" # Placeholder player: %player%
+player.quit: "&d&l- [ %player% ]" # Placeholder player: %player%

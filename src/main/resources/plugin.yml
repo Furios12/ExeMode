@@ -45,6 +45,19 @@ commands:
     description: Espelle un giocatore dal server
     usage: /exekick <giocatore> <motivo>
     permission: exemode.kick
+  exewarn:
+    description: Warn a player
+    usage: /exewarn <giocatore> <motivo>
+    permission: exemode.warn
+  exeunwarn:
+    description: Unwarn a player
+    usage: /exeunwarn <giocatore>
+    permission: exemode.unwarn
+  exesmg:
+    description: Message a player
+    usage: /<command> <giocatore> <messaggio>
+    permission: exemode.smg
+    permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
 
 
 permissions:
@@ -71,4 +84,13 @@ permissions:
     default: op
   exemode.kick:
     description: Allows using kick command
+    default: op
+  exemode.warn:
+    description: Allows using warn command
+    default: op
+  exemode.unwarn:
+    description: Allows using unwarn command
+    default: op
+  exemode.smg:
+    description: Allows using smg command
     default: op
