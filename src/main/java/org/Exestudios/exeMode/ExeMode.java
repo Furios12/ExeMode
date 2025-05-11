@@ -8,10 +8,12 @@ import org.Exestudios.exeMode.events.PlayerJoinBanCheck;
 import org.Exestudios.exeMode.events.PlayerConnectionListener;
 import org.Exestudios.exeMode.utils.messages;
 import org.Exestudios.exeMode.utils.WarnManager;
+import org.Exestudios.exeMode.events.ChatListener;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.Exestudios.exeMode.utils.MuteManager;
 
 
 import java.io.*;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.net.URI;
 
 public final class ExeMode extends JavaPlugin {
+    private MuteManager muteManager;
 
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -75,6 +78,8 @@ public final class ExeMode extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("exsp")).setExecutor(new exsp());
         Objects.requireNonNull(this.getCommand("exs")).setExecutor(new exs());
         Objects.requireNonNull(this.getCommand("exe")).setExecutor(new exe());
+        Objects.requireNonNull(this.getCommand("exemute")).setExecutor(new exemute(this));
+        Objects.requireNonNull(this.getCommand("exeunmute")).setExecutor(new exeunmute(this));
         Objects.requireNonNull(this.getCommand("exesmg")).setExecutor(new exesmg());
         Objects.requireNonNull(this.getCommand("exeban")).setExecutor(new exeban(this));
         Objects.requireNonNull(this.getCommand("exeunban")).setExecutor(new exeunban(this));
@@ -98,12 +103,19 @@ public final class ExeMode extends JavaPlugin {
 
     private void setupEvents() {
         logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol...");
+        this.muteManager = new MuteManager(this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinBanCheck(this), this);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol... Done!");
         logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions Protocol...");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
     }
+
+    public MuteManager getMuteManager() {
+        return muteManager;
+    }
+
 
     public void checkUpdates(Player player, boolean force) {
 
@@ -186,9 +198,35 @@ public final class ExeMode extends JavaPlugin {
     private void verifyRequiredMessages() {
         logColored(ANSI_BLUE + "Checking required messages:");
         String[] requiredMessages = {
-            "ban.message",
-            "ban.broadcast",
-            "ban.broadcast-reason"
+                "ban.message",
+                "ban.broadcast",
+                "ban.broadcast-reason",
+                "no-player",
+                "no-permission",
+                "gamemode-creative",
+                "gamemode-survival",
+                "gamemode-adventure",
+                "gamemode-spectator",
+                "ban.no-permission",
+                "ban.message",
+                "ban.broadcast",
+                "ban.broadcast-reason",
+                "ban.error",
+                "ban.usage",
+                "unban.no-permission",
+                "unban.usage",
+                "unban.not-banned",
+                "unban.broadcast",
+                "unban.error",
+                "unban.success",
+                "kick.no-permission",
+                "kick.usage",
+                "kick.player-not-found",
+                "kick.message",
+                "kick.broadcast",
+                "kick.broadcast-reason",
+                "player.join",
+                "player.quit"
         };
 
         for (String path : requiredMessages) {
@@ -215,6 +253,11 @@ public final class ExeMode extends JavaPlugin {
         if (warnManager != null) {
             warnManager.saveWarnFile();
         }
+        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Saving mute file...");
+        if (muteManager != null) {
+            muteManager.saveMutedPlayers();
+        }
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Saving mute file... Done!");
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Saving warn file... Done!");
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Closing Protocol system... Done!");
         logColored(ANSI_RED + "ExeMode " + CURRENT_VERSION + " Closed!");

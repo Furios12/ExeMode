@@ -58,6 +58,16 @@ commands:
     usage: /<command> <giocatore> <messaggio>
     permission: exemode.smg
     permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+  exemute:
+    description: Mute a player
+    usage: /<command> <giocatore> <motivo>
+    permission: exemode.mute
+    permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+  exeunmute:
+    description: Unmute a player
+    usage: /<command> <giocatore>
+    permission: exemode.unmute
+    permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
 
 
 permissions:
@@ -93,4 +103,10 @@ permissions:
     default: op
   exemode.smg:
     description: Allows using smg command
+    default: op
+  exemode.mute:
+    description: Allows using mute command
+    default: op
+  exemode.unmute:
+    description: Allows using unmute command
     default: op
