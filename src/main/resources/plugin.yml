@@ -1,5 +1,5 @@
 name: ExeMode
-version: '1.0-SNAPSHOT-BETA'
+version: '1.0.2'
 main: org.Exestudios.exeMode.ExeMode
 api-version: '1.21'
 authors: [Exestudios]

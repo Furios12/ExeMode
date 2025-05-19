@@ -5,7 +5,7 @@
   #██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
   #▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀
 
-Config Version: 1.0.1
+Config Version: 1.0.2
 
 no-player: "§cQuesto comando può essere eseguito solo da un giocatore!"
 no-permission: "&c[ExeMode] Non hai il permesso di usare questo comando!"

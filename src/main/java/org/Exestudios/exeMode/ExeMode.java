@@ -30,7 +30,7 @@ public final class ExeMode extends JavaPlugin {
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
+    //private static final String ANSI_PURPLE = "\u001B[35m";
     private static final String ANSI_CYAN = "\u001B[36m";
 
     private WarnManager warnManager;
@@ -39,7 +39,7 @@ public final class ExeMode extends JavaPlugin {
         getLogger().info(message + ANSI_RESET);
     }
 
-    private static final String CURRENT_VERSION = "1.0.1";
+    private static final String CURRENT_VERSION = "1.0.2";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/Furios12/ExeMode/releases/latest";
     private UpdateResult lastUpdateResult;
     private long lastUpdateCheck;
@@ -50,29 +50,40 @@ public final class ExeMode extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        logColored(ANSI_CYAN + """
-            -
-            █▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
-            ██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
-            ▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀""");
+    logColored(ANSI_CYAN + "----------------------------------------------");
+    logColored(ANSI_CYAN + "               EXEMODE | STARTING UP          ");
+    logColored(ANSI_CYAN + "----------------------------------------------");
+    logColored(ANSI_YELLOW + "     Version: " + CURRENT_VERSION);
+    logColored(ANSI_YELLOW + "     State: Loading");
+    logColored(ANSI_YELLOW + "----------------------------------------------");
 
-        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Checking for updates...");
-        checkUpdates(null, false);
+    logStartupStep("Checking Updates", () -> checkUpdates(null, false));
+    logStartupStep("Loading Commands", this::registerCommands);
+    logStartupStep("Loading Messages", this::setupMessagesAndChecks);
+    logStartupStep("Setting Up Events", this::setupEvents);
+    logStartupStep("Starting Warn System", () -> this.warnManager = new WarnManager(this));
 
-        logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Commands Protocol...");
-        registerCommands();
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
 
-        setupMessagesAndChecks();
-        setupEvents();
-        this.warnManager = new WarnManager(this);
+    logColored(ANSI_CYAN + "----------------------------------------------");
+    logColored(ANSI_CYAN + "               EXEMODE | STARTED UP          ");
+    logColored(ANSI_GREEN + "----------------------------------------------");
+    logColored(ANSI_YELLOW + "     Version: " + CURRENT_VERSION);
+    logColored(ANSI_GREEN + "     Status: ACTIVE ✓");
+    logColored(ANSI_YELLOW + "     Author: Exestudios");
+    logColored(ANSI_YELLOW + "     Premium: No");
+    logColored(ANSI_GREEN + "----------------------------------------------");
+    logColored(ANSI_CYAN + "Need help? Visit: https://github.com/Furios12/ExeMode/wiki (Not available yet)");
+    logColored(ANSI_CYAN + "Found a bug? Report it: https://github.com/Furios12/ExeMode/issues");
+    logColored(ANSI_GREEN + "----------------------------------------------");
+}
 
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Ready to use!");
-        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
-    }
+private void logStartupStep(String step, Runnable action) {
+    logColored(ANSI_YELLOW + "⚙ " + step + "...");
+    action.run();
+    logColored(ANSI_GREEN + "✓ " + step + "| completed");
+}
 
     private void registerCommands() {
-        getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol...");
         Objects.requireNonNull(this.getCommand("exc")).setExecutor(new exc());
         Objects.requireNonNull(this.getCommand("exa")).setExecutor(new exa());
         Objects.requireNonNull(this.getCommand("exsp")).setExecutor(new exsp());
@@ -87,7 +98,6 @@ public final class ExeMode extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("exekick")).setExecutor(new exekick(this));
         Objects.requireNonNull(this.getCommand("exewarn")).setExecutor(new exewarn(this));
         Objects.requireNonNull(this.getCommand("exeunwarn")).setExecutor(new exeunwarn(this));
-        getLogger().info("ExeMode " + CURRENT_VERSION + " Loading Commands Protocol... Done!");
     }
 
     private void setupMessagesAndChecks() {
@@ -95,20 +105,18 @@ public final class ExeMode extends JavaPlugin {
         checkMessageVersion();
         logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Checking updates for messages.yml... Done!");
         
-        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Messages Protocol...");
+        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Messages...");
         messages.init(this);
         verifyRequiredMessages();
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Messages Protocol... Done!");
+        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Messages... Done!");
     }
 
     private void setupEvents() {
-        logColored(ANSI_PURPLE + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol...");
         this.muteManager = new MuteManager(this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinBanCheck(this), this);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Loading Events Protocol... Done!");
-        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions Protocol...");
+        logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions...");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
     }
 
@@ -138,9 +146,9 @@ public final class ExeMode extends JavaPlugin {
                     logUpdateAvailable(result);
                 }
             } catch (Exception e) {
-                getLogger().warning("Errore durante il controllo degli aggiornamenti: " + e.getMessage());
+                getLogger().warning("Update Error: " + e.getMessage());
                 if (player != null) {
-                    player.sendMessage(ChatColor.RED + "Errore durante il controllo degli aggiornamenti. Controlla la console per i dettagli.");
+                    player.sendMessage(ChatColor.RED + "(Update Error) Errore durante il controllo degli aggiornamenti. Controlla la console per i dettagli.");
                 }
             }
         });
@@ -173,18 +181,28 @@ public final class ExeMode extends JavaPlugin {
         }
     }
 
-    private void sendUpdateMessage(Player player, UpdateResult result) {
-        if (result.updateAvailable) {
-            player.sendMessage(ChatColor.GREEN + "=================================");
-            player.sendMessage(ChatColor.YELLOW + "È disponibile un nuovo aggiornamento!");
-            player.sendMessage(ChatColor.YELLOW + "Versione attuale: " + ChatColor.RED + CURRENT_VERSION);
-            player.sendMessage(ChatColor.YELLOW + "Nuova versione: " + ChatColor.GREEN + result.latestVersion);
-            player.sendMessage(ChatColor.YELLOW + "Scaricalo da: " + ChatColor.AQUA + result.downloadUrl);
-            player.sendMessage(ChatColor.GREEN + "=================================");
-        } else {
-            player.sendMessage(ChatColor.GREEN + "Il plugin è aggiornato all'ultima versione!");
-        }
+private void sendUpdateMessage(Player player, UpdateResult result) {
+    if (result.updateAvailable) {
+        player.sendMessage(ChatColor.GREEN + """
+            ╔════════════════════════════════════╗
+            ║         UPDATE AVAILABLE!          ║
+            ╠════════════════════════════════════╣
+            ║  Current: %s%s
+            ║  Latest:  %s%s
+            ║  Download: %s%s
+            ╚════════════════════════════════════╝""".formatted(
+                ChatColor.RED, CURRENT_VERSION,
+                ChatColor.GREEN, result.latestVersion,
+                ChatColor.AQUA, result.downloadUrl));
+    } else {
+        player.sendMessage(ChatColor.GREEN + """
+            ╔════════════════════════════════════╗
+            ║      EXEMODE IS UP TO DATE!        ║
+            ╠════════════════════════════════════╣
+            ║  Current Version: %s               ║
+            ╚════════════════════════════════════╝""".formatted(CURRENT_VERSION));
     }
+}
 
     private void logUpdateAvailable(UpdateResult result) {
         logColored(ANSI_YELLOW + "=================================");
@@ -240,29 +258,38 @@ public final class ExeMode extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        logColored(ANSI_CYAN + """
-            -
-            █▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
-            ██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
-            ▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀""");
-        
-        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Commands Protocol...");
-        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Messages Protocol...");
-        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Closing Protocol system...");
-        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Saving warn file...");
-        if (warnManager != null) {
-            warnManager.saveWarnFile();
-        }
-        logColored(ANSI_YELLOW + "ExeMode " + CURRENT_VERSION + " Saving mute file...");
-        if (muteManager != null) {
-            muteManager.saveMutedPlayers();
-        }
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Saving mute file... Done!");
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Saving warn file... Done!");
-        logColored(ANSI_GREEN + "ExeMode " + CURRENT_VERSION + " Closing Protocol system... Done!");
-        logColored(ANSI_RED + "ExeMode " + CURRENT_VERSION + " Closed!");
-        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Developed by Exestudios");
-    }
+        logColored(ANSI_CYAN + "----------------------------------------------");
+        logColored(ANSI_CYAN + "               EXEMODE | SHUTTING DOWN        ");
+        logColored(ANSI_CYAN + "----------------------------------------------");
+        logColored(ANSI_YELLOW + "     Version: " + CURRENT_VERSION);
+        logColored(ANSI_YELLOW + "     State: Disabling");
+        logColored(ANSI_YELLOW + "----------------------------------------------");
+
+    logShutdownStep("Saving warn data", () -> {
+        if (warnManager != null) warnManager.saveWarnFile();
+    });
+
+    logShutdownStep("Saving mute data", () -> {
+        if (muteManager != null) muteManager.saveMutedPlayers();
+    });
+
+    logColored(ANSI_CYAN + "----------------------------------------------");
+        logColored(ANSI_CYAN + "               EXEMODE | SHUTTING DOWN    ");
+    logColored(ANSI_CYAN + "----------------------------------------------");
+    logColored(ANSI_YELLOW + "     Version: " + CURRENT_VERSION);
+    logColored(ANSI_RED + "     Status: OFFLINE ✗");
+    logColored(ANSI_YELLOW + "     Author: Exestudios");
+    logColored(ANSI_YELLOW + "     Premium: No");
+    logColored(ANSI_RED + "----------------------------------------------");
+    logColored(ANSI_YELLOW + "Thanks for using ExeMode! See you next time!");
+    logColored(ANSI_RED + "----------------------------------------------");
+}
+
+private void logShutdownStep(String step, Runnable action) {
+    logColored(ANSI_YELLOW + "⚡ " + step + "...");
+    action.run();
+    logColored(ANSI_GREEN + "✓ " + step + " completed");
+}
 
     private void checkMessageVersion() {
         File messagesFile = new File(getDataFolder(), "messages.yml");
