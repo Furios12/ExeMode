@@ -68,6 +68,10 @@ commands:
     usage: /<command> <giocatore>
     permission: exemode.unmute
     permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+  exefly:
+    description: Active Fly
+    usage: /<command> [giocatore]
+    permission: exemode.fly
 
 
 permissions:
@@ -109,4 +113,10 @@ permissions:
     default: op
   exemode.unmute:
     description: Allows using unmute command
+    default: op
+  exemode.fly:
+    description: Allows using fly command
+    default: op
+  exemode.fly.other:
+    description: Allow Activate fly at player
     default: op

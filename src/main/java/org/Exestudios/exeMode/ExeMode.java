@@ -98,6 +98,7 @@ private void logStartupStep(String step, Runnable action) {
         Objects.requireNonNull(this.getCommand("exekick")).setExecutor(new exekick(this));
         Objects.requireNonNull(this.getCommand("exewarn")).setExecutor(new exewarn(this));
         Objects.requireNonNull(this.getCommand("exeunwarn")).setExecutor(new exeunwarn(this));
+        Objects.requireNonNull(this.getCommand("exefly")).setExecutor(new exefly(this));
     }
 
     private void setupMessagesAndChecks() {
