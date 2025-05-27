@@ -33,7 +33,11 @@ public class exeunmute implements CommandExecutor {
             return true;
         }
 
-        plugin.getMuteManager().unmutePlayer(target.getUniqueId());
+plugin.getMuteManager().unmutePlayer(
+    target.getUniqueId(),
+    target.getName(),
+    sender.getName()
+);
         
         sender.sendMessage("§a§lHai smutato " + target.getName());
         target.sendMessage("§a§lNon sei più mutato nella chat");

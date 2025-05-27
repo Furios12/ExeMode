@@ -34,7 +34,7 @@ public class exemute implements CommandExecutor {
             return true;
         }
 
-        // Costruisci il motivo dal resto degli argomenti
+
         String reason = null;
         if (args.length > 1) {
             StringBuilder reasonBuilder = new StringBuilder();
@@ -44,13 +44,19 @@ public class exemute implements CommandExecutor {
             reason = reasonBuilder.toString().trim();
         }
 
-        plugin.getMuteManager().mutePlayer(target.getUniqueId(), reason);
 
-        // Notifica al mittente
+        plugin.getMuteManager().mutePlayer(
+            target.getUniqueId(),
+            reason,
+            sender.getName(),
+            target.getName()
+        );
+
+
         sender.sendMessage(ChatColor.GREEN + "Hai mutato " + target.getName() + 
                 (reason != null ? ChatColor.YELLOW + " per: " + reason : ""));
 
-        // Notifica al giocatore mutato
+
         target.sendMessage(ChatColor.RED + "Sei stato mutato nella chat" + 
                 (reason != null ? ChatColor.YELLOW + "\nMotivo: " + reason : ""));
 

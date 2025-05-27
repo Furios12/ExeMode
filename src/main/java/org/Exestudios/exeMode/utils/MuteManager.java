@@ -3,7 +3,7 @@ package org.Exestudios.exeMode.utils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
+import org.Exestudios.exeMode.ExeMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,10 @@ public class MuteManager {
     private final File muteFile;
     private final Map<UUID, String> mutedPlayers; // UUID -> motivo
     private final Logger logger;
+    private final ExeMode plugin;
 
-    public MuteManager(Plugin plugin) {
+    public MuteManager(ExeMode plugin) {
+        this.plugin = plugin;
         this.mutedPlayers = new HashMap<>();
         this.muteFile = new File(plugin.getDataFolder(), "muted_players.yml");
         this.logger = plugin.getLogger();
@@ -81,13 +83,25 @@ public class MuteManager {
         return mutedPlayers.getOrDefault(playerUUID, null);
     }
 
-    public void mutePlayer(UUID playerUUID, String reason) {
-        mutedPlayers.put(playerUUID, reason != null ? reason : "Nessun motivo specificato");
+    public void mutePlayer(UUID playerUUID, String reason, String staffMember, String playerName) {
+        String finalReason = reason != null ? reason : "Nessun motivo specificato";
+        mutedPlayers.put(playerUUID, finalReason);
         saveMutedPlayers();
+
+
+        if (plugin.getDiscordWebhook() != null) {
+            String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Motivo:** %s", 
+                playerName, staffMember, finalReason);
+            plugin.getDiscordWebhook().sendWebhook("Nuovo Mute", description, 15158332); // Colore rosso
+        }
     }
 
-    public void unmutePlayer(UUID playerUUID) {
-        mutedPlayers.remove(playerUUID);
+    public void unmutePlayer(UUID playerUUID, String playerName, String staffMember) {
+        if (mutedPlayers.remove(playerUUID) != null && plugin.getDiscordWebhook() != null) {
+            String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Mute rimosso con successo**", 
+                playerName, staffMember);
+            plugin.getDiscordWebhook().sendWebhook("Unmute", description, 5763719); // Colore verde
+        }
         saveMutedPlayers();
     }
 }

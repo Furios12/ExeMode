@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 
@@ -43,6 +44,7 @@ public class exeban implements CommandExecutor {
             reason.append(args[i]).append(" ");
         }
         String banReason = reason.toString().trim();
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
 
         File banFile = new File(plugin.getDataFolder(), "bans.yml");
         FileConfiguration banConfig = YamlConfiguration.loadConfiguration(banFile);
@@ -54,6 +56,20 @@ public class exeban implements CommandExecutor {
 
         try {
             banConfig.save(banFile);
+            
+
+            if (plugin.getDiscordWebhook() != null) {
+                String description = String.format("""
+                    **Giocatore:** %s
+                    **Staff:** %s
+                    **Motivo:** %s
+                    **Data:** %s""",
+                    playerName, 
+                    sender.getName(), 
+                    banReason,
+                    currentDate);
+                plugin.getDiscordWebhook().sendWebhook("🔨 Ban Eseguito", description, 15158332); // Rosso
+            }
         } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "Impossibile salvare il file bans.yml per il giocatore " + playerName, e);
             sender.sendMessage(messages.get("ban.error"));
@@ -64,7 +80,7 @@ public class exeban implements CommandExecutor {
             String banMessage = messages.get("ban.message")
                     .replace("%banner%", sender.getName())
                     .replace("%reason%", banReason)
-                    .replace("%date%", new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+                    .replace("%date%", currentDate);
             target.kickPlayer(banMessage);
         }
 

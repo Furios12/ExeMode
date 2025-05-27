@@ -52,6 +52,13 @@ public class WarnManager {
         warnConfig.set(path + ".warns", warns);
         warnConfig.set(path + ".total", warns.size());
 
+
+        if (plugin.getDiscordWebhook() != null) {
+            String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Motivo:** %s", 
+                playerName, staffMember, reason);
+            plugin.getDiscordWebhook().sendWebhook("Nuovo Warn", description, 16776960); // Colore giallo
+        }
+
         saveWarnFile();
     }
 
@@ -70,6 +77,13 @@ public class WarnManager {
         } else {
             warnConfig.set(path + ".warns", warns);
             warnConfig.set(path + ".total", warns.size());
+        }
+
+
+        if (plugin.getDiscordWebhook() != null && warnConfig.contains("players." + playerUUID + ".name")) {
+            String playerName = warnConfig.getString("players." + playerUUID + ".name");
+            String description = String.format("**Giocatore:** %s\n**Warn rimosso con successo**", playerName);
+            plugin.getDiscordWebhook().sendWebhook("Warn Rimosso", description, 5763719); // Colore verde
         }
 
         saveWarnFile();

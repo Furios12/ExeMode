@@ -1,6 +1,7 @@
 package org.Exestudios.exeMode;
 
 import org.Exestudios.exeMode.commands.*;
+import org.Exestudios.exeMode.utils.DiscordWebhook;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +25,8 @@ import java.net.URI;
 
 public final class ExeMode extends JavaPlugin {
     private MuteManager muteManager;
-
+    private DiscordWebhook discordWebhook;
+    private WarnManager warnManager;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
@@ -32,8 +34,6 @@ public final class ExeMode extends JavaPlugin {
     private static final String ANSI_BLUE = "\u001B[34m";
     //private static final String ANSI_PURPLE = "\u001B[35m";
     private static final String ANSI_CYAN = "\u001B[36m";
-
-    private WarnManager warnManager;
 
     private void logColored(String message) {
         getLogger().info(message + ANSI_RESET);
@@ -47,6 +47,19 @@ public final class ExeMode extends JavaPlugin {
 
     private record UpdateResult(boolean updateAvailable, String latestVersion, String downloadUrl) {
     }
+
+    private void setupDiscordWebhook() {
+        saveDefaultConfig();
+        String webhookUrl = getConfig().getString("discord-webhook-url", "");
+        if (!webhookUrl.isEmpty()) {
+            this.discordWebhook = new DiscordWebhook(webhookUrl);
+            getLogger().info("Discord webhook configurato con successo!");
+        } else {
+            getLogger().warning("URL del webhook Discord non configurato!");
+        }
+    }
+
+
 
     @Override
     public void onEnable() {
@@ -62,6 +75,7 @@ public final class ExeMode extends JavaPlugin {
     logStartupStep("Loading Messages", this::setupMessagesAndChecks);
     logStartupStep("Setting Up Events", this::setupEvents);
     logStartupStep("Starting Warn System", () -> this.warnManager = new WarnManager(this));
+    logStartupStep("Loading Discord Webhook", this::setupDiscordWebhook);
 
 
     logColored(ANSI_CYAN + "----------------------------------------------");
@@ -75,6 +89,11 @@ public final class ExeMode extends JavaPlugin {
     logColored(ANSI_CYAN + "Need help? Visit: https://github.com/Furios12/ExeMode/wiki (Not available yet)");
     logColored(ANSI_CYAN + "Found a bug? Report it: https://github.com/Furios12/ExeMode/issues");
     logColored(ANSI_GREEN + "----------------------------------------------");
+}
+
+
+public DiscordWebhook getDiscordWebhook() {
+    return discordWebhook;
 }
 
 private void logStartupStep(String step, Runnable action) {

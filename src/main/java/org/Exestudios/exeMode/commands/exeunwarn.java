@@ -34,18 +34,37 @@ public class exeunwarn implements CommandExecutor {
             return true;
         }
 
+        int currentWarns = plugin.getWarnManager().getWarnsCount(target.getUniqueId());
+        if (currentWarns <= 0) {
+            sender.sendMessage(ChatColor.RED + "Il giocatore non ha ammonizioni da rimuovere!");
+            return true;
+        }
+
+
         if (plugin.getWarnManager().removeWarn(target.getUniqueId())) {
             int remainingWarns = plugin.getWarnManager().getWarnsCount(target.getUniqueId());
-            
 
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Un'ammonizione di " + target.getName() + 
-                                  " è stata rimossa da " + sender.getName() +
-                                  " (Warn rimanenti: " + remainingWarns + ")");
-            
 
-            target.sendMessage(ChatColor.GREEN + "Una tua ammonizione è stata rimossa! Warn rimanenti: " + remainingWarns);
-        } else {
-            sender.sendMessage(ChatColor.RED + "Il giocatore non ha ammonizioni da rimuovere!");
+            if (plugin.getDiscordWebhook() != null) {
+                String description = String.format("""
+                    **Giocatore:** %s
+                    **Staff:** %s
+                    **Warns rimanenti:** %d
+                    **Azione:** Rimozione warn""",
+                    target.getName(),
+                    sender.getName(),
+                    remainingWarns);
+                plugin.getDiscordWebhook().sendWebhook("⚠️ Warn Rimosso", description, 5763719); // Colore verde
+            }
+
+
+            String broadcastMessage = ChatColor.GREEN + "Un'ammonizione di " + target.getName() + 
+                                    " è stata rimossa da " + sender.getName() +
+                                    ChatColor.YELLOW + " (Warn rimanenti: " + remainingWarns + ")";
+            
+            Bukkit.broadcastMessage(broadcastMessage);
+            target.sendMessage(ChatColor.GREEN + "Una tua ammonizione è stata rimossa!" + 
+                             ChatColor.YELLOW + " Warn rimanenti: " + remainingWarns);
         }
 
         return true;
