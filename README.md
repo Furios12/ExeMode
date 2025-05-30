@@ -1,44 +1,70 @@
+# 🛡️ Exemode – Plugin di Moderazione Avanzata per Minecraft
 
-## ✨ ExeMode - The Ultimate Minecraft Moderation & Utility Plugin ✨
-
-**ExeMode** è il plugin definitivo per gestire il tuo server Minecraft con stile, velocità ed efficienza!
-Leggero, semplice da usare e incredibilmente potente, **ExeMode** ti mette in mano tutti gli strumenti essenziali per amministrare il tuo server come un vero professionista.
+**Exemode** è un plugin di moderazione completo progettato per offrire al tuo staff strumenti rapidi ed efficaci per gestire il server. Include una vasta gamma di comandi, messaggi personalizzati e log automatici su Discord.
 
 ---
 
-### 🔧 Caratteristiche Principali:
+## ✨ Caratteristiche principali
 
-✅ **Cambia modalità di gioco all’istante** con comandi facili e intuitivi:
-`/exec`, `/exes`, `/exesp`, `/exea`
-
-✅ **Gestione avanzata dei giocatori** con comandi rapidi per il controllo e la moderazione:
-
-* `/exewarn [player] [reason]` – Avvisa un giocatore con un messaggio chiaro.
-* `/exeunwarn [player]` – Rimuovi un avviso precedente.
-* `/exeban [player] [reason]` – Banna un giocatore in pochi secondi.
-* `/exeunban [player]` – Revoca un ban in modo immediato.
-* `/exemute [player] [reason]` – Silenzia i disturbatori.
-* `/exeunmute [player]` – Ridai voce ai giocatori mutati.
-* `/exemsg [player] [message]` – Invia messaggi privati facilmente.
-
-🚀 **Compatibile con tutte le versioni moderne di Minecraft**
-
-⚙️ **Prestazioni ottimizzate** – Nessun lag, nessun problema.
-
-👮 **Pensato per staff e moderatori** – Interfaccia rapida, comandi diretti, gestione totale.
-
-🪶 **Leggerissimo** – Nessun impatto sulle performance del server.
-
-🛫 **Volo toggle con** `/exefly` *(in arrivo!)*
+- 🔇 Sistema di moderazione completo: `mute`, `unmute`, `warn`, `unwarn`, `ban`, `unban`, `kick`
+- 📡 Logging automatico su Discord per tutte le azioni staff
+- ✈️ Comando `/exefly` per attivare il volo in un attimo
+- 🛠️ Cambio rapido modalità di gioco: creative, survival, adventure, spectator
+- 💬 Messaggi completamente riscritti per chiarezza
+- 🐞 Numerosi bug corretti per una maggiore stabilità
 
 ---
 
-### 🎯 Perché scegliere ExeMode?
+## 🧾 Comandi disponibili
 
-Che tu stia gestendo una piccola community o un grande network, **ExeMode** è lo strumento perfetto per garantire ordine, rapidità e semplicità.
-Gestisci, modera e comunica con efficienza — tutto con un solo plugin.
+=== ExeMode Commands ===
+/exe - Mostra il messaggio di aiuto
+/exc - Passa alla modalità creativa
+/exs - Passa alla modalità sopravvivenza
+/exa - Passa alla modalità avventura
+/exsp - Passa alla modalità spettatore
+/exeban - Bana un giocatore
+/exeunban - Sbana un giocatore
+/exekick - Espelle un giocatore
+/exemute - Muta un giocatore
+/exeunmute - Smuta un giocatore
+/exewarn - Avvisa un giocatore
+/exeunwarn - Rimuove un avviso a un giocatore
+/exemsg - Invia un messaggio privato a un giocatore
+/exefly - Abilita/disabilita la modalità volo
+
 
 ---
 
-**🧩 Pronto a prendere il controllo del tuo server? Scegli ExeMode.**
+## 📡 Integrazione Discord
+
+Tutti i comandi di moderazione vengono loggati automaticamente su un canale Discord configurabile per mantenere **trasparenza e tracciabilità** delle azioni dello staff.
+
+---
+
+## 📌 Compatibilità
+
+- ✅ **Minecraft 1.21.5**
+- ❌ Altre versioni non supportate
+
+---
+
+## ⚠️ Nota Importante
+
+> La versione **1.0.2** è **l’ultima versione open-source**.  
+> Dalla **1.0.3**, **Exemode diventerà un progetto privato**.  
+> Il codice sorgente non sarà più disponibile pubblicamente.
+
+---
+
+## 🔗 Link utili
+
+- [📁 GitHub (fino alla 1.0.2)](https://github.com/Furios12/ExeMode)
+- [📞 Supporto Discord](https://discord.gg/dTdJtjD2VW)
+
+---
+
+## 💡 Suggerimenti & Supporto
+
+Hai bisogno di aiuto o vuoi suggerire nuove funzionalità? Unisciti al nostro [server Discord](https://discord.gg/dTdJtjD2VW) per ottenere supporto direttamente dagli sviluppatori!
 
