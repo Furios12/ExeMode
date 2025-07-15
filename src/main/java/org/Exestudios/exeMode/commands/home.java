@@ -19,7 +19,7 @@ public class home implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Solo i player possono usare questo comando.");
+            sender.sendMessage(messages.get("no-player"));
             return true;
         }
         if (!homeManager.hasHome(player)) {
