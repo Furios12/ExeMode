@@ -15,6 +15,9 @@ import org.json.simple.parser.JSONParser;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.Exestudios.exeMode.utils.MuteManager;
+import org.Exestudios.exeMode.commands.sethome;
+import org.Exestudios.exeMode.commands.home;
+import org.Exestudios.exeMode.utils.HomeManager;
 
 
 import java.io.*;
@@ -27,6 +30,7 @@ public final class ExeMode extends JavaPlugin {
     private MuteManager muteManager;
     private DiscordWebhook discordWebhook;
     private WarnManager warnManager;
+    private HomeManager homeManager;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
@@ -39,7 +43,7 @@ public final class ExeMode extends JavaPlugin {
         getLogger().info(message + ANSI_RESET);
     }
 
-    private static final String CURRENT_VERSION = "1.0.2";
+    private static final String CURRENT_VERSION = "1.0.3";
     private static final String GITHUB_API_URL = "https://api.github.com/repos/Furios12/ExeMode/releases/latest";
     private UpdateResult lastUpdateResult;
     private long lastUpdateCheck;
@@ -71,9 +75,9 @@ public final class ExeMode extends JavaPlugin {
     logColored(ANSI_YELLOW + "----------------------------------------------");
 
     logStartupStep("Checking Updates", () -> checkUpdates(null, false));
+    logStartupStep("Setting Up Events", this::setupEvents);
     logStartupStep("Loading Commands", this::registerCommands);
     logStartupStep("Loading Messages", this::setupMessagesAndChecks);
-    logStartupStep("Setting Up Events", this::setupEvents);
     logStartupStep("Starting Warn System", () -> this.warnManager = new WarnManager(this));
     logStartupStep("Loading Discord Webhook", this::setupDiscordWebhook);
 
@@ -118,6 +122,9 @@ private void logStartupStep(String step, Runnable action) {
         Objects.requireNonNull(this.getCommand("exewarn")).setExecutor(new exewarn(this));
         Objects.requireNonNull(this.getCommand("exeunwarn")).setExecutor(new exeunwarn(this));
         Objects.requireNonNull(this.getCommand("exefly")).setExecutor(new exefly(this));
+        Objects.requireNonNull(this.getCommand("sethome")).setExecutor(new sethome(homeManager));
+        Objects.requireNonNull(this.getCommand("home")).setExecutor(new home(homeManager));
+        Objects.requireNonNull(this.getCommand("removehome")).setExecutor(new removehome(homeManager));
     }
 
     private void setupMessagesAndChecks() {
@@ -136,6 +143,7 @@ private void logStartupStep(String step, Runnable action) {
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinBanCheck(this), this);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
+        this.homeManager = new HomeManager(getDataFolder());
         logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions...");
         logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
     }

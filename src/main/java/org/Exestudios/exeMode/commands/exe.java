@@ -23,6 +23,8 @@ public class exe implements CommandExecutor {
             §e/exemsg §7- send a message to a player
             §e/exeunwarn §7- unwarn a player
             §e/exeunmute §7- unmute a player
+            §e/sethome §7- Set your home location
+            §e/home §7- Teleport to your home location
             §6§l====================
             """);
         return true;

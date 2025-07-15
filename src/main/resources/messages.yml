@@ -5,7 +5,7 @@
   #██─▄█▀██▀─▀███─▄█▀██─█▄█─██─██─██─██─██─▄█▀█
   #▀▄▄▄▄▄▀▄▄█▄▄▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▄▄▀▄▄▄▄▀▀▄▄▄▄▄▀
 
-Config Version: 1.0.2
+Config Version: 1.0.3
 
 no-player: "§cQuesto comando può essere eseguito solo da un giocatore!"
 no-permission: "&c[ExeMode] Non hai il permesso di usare questo comando!"
@@ -37,3 +37,8 @@ kick.broadcast-reason: "§7Motivo: %reason%"
 
 player.join: "&d&l+ [ %player% ]" # Placeholder player: %player%
 player.quit: "&d&l- [ %player% ]" # Placeholder player: %player%
+
+no-home: "§c§lNon hai ancora impostato una home!"
+home-teleport: "§2§lTeletrasportato alla tua home!"
+home-removed: "§2§lHome rimossa con successo!"
+home-set: "§2§lHome impostata con successo!"

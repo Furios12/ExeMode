@@ -1,5 +1,5 @@
 name: ExeMode
-version: '1.0.2'
+version: '1.0.3'
 main: org.Exestudios.exeMode.ExeMode
 api-version: '1.21'
 authors: [Exestudios]
@@ -72,6 +72,18 @@ commands:
     description: Active Fly
     usage: /<command> [giocatore]
     permission: exemode.fly
+  home:
+    description: tp to home
+    usage: /<command>
+    permission: exemode.home
+  sethome:
+    description: set home
+    usage: /<command>
+    permission: exemode.sethome
+  removehome:
+    description: remove home
+    usage: /<command>
+    permission: exemode.removehome
 
 
 permissions:
@@ -119,4 +131,13 @@ permissions:
     default: op
   exemode.fly.other:
     description: Allow Activate fly at player
+    default: op
+  exemode.home:
+    description: Allows using home command
+    default: op
+  exemode.sethome:
+    description: Allows using sethome command
+    default: op
+  exemode.removehome:
+    description: Allows using removehome command
     default: op
