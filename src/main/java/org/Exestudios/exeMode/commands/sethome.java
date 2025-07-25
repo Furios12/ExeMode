@@ -23,7 +23,6 @@ public class sethome implements CommandExecutor {
         }
         homeManager.setHome(player);
         player.sendMessage(messages.get("home-set"));
-        player.sendMessage(ChatColor.GREEN + "Home impostata!");
         return true;
     }
 }

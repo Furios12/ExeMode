@@ -70,7 +70,7 @@ public class WarnManager {
             return false;
         }
 
-        warns.removeLast();
+        warns.remove(warns.size() - 1);
 
         if (warns.isEmpty()) {
             warnConfig.set(path, null);

@@ -30,6 +30,9 @@ public class MuteManager {
     private void loadMutedPlayers() {
         if (!muteFile.exists()) {
             try {
+                if (!muteFile.getParentFile().exists()) {
+                    muteFile.getParentFile().mkdirs();
+                }
                 if (!muteFile.createNewFile()) {
                     logger.severe("Impossibile creare il file muted_players.yml");
                     return;

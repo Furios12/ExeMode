@@ -1,7 +1,7 @@
 name: ExeMode
 version: '1.0.3'
 main: org.Exestudios.exeMode.ExeMode
-api-version: '1.21'
+api-version: '1.16'
 authors: [Exestudios]
 description: A plugin for gamemode management
 
