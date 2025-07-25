@@ -7,9 +7,8 @@ permissions:
   security-events: write
 
 jobs:
-  build:
+  build-java21:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,12 +19,34 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Build with Maven (Java 21)
         run: mvn clean install --batch-mode
 
-      - name: Upload a Build Artifact
+      - name: Upload a Build Artifact (Java 21)
         uses: actions/upload-artifact@v4
         with:
-          name: ExeMode Beta Files
+          name: ExeMode Beta Files Java 21
+          if-no-files-found: error
+          path: target/*.jar
+
+  build-java16:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 16
+        uses: actions/setup-java@v4
+        with:
+          java-version: 16
+          distribution: 'temurin'
+
+      - name: Build with Maven (Java 16)
+        run: mvn clean install --batch-mode
+
+      - name: Upload a Build Artifact (Java 16)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExeMode Beta Files Java 16
           if-no-files-found: error
           path: target/*.jar
