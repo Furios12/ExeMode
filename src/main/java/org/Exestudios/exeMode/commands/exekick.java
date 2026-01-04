@@ -10,14 +10,12 @@ import org.Exestudios.exeMode.utils.messages;
 import org.jetbrains.annotations.NotNull;
 
 public class exekick implements CommandExecutor {
-    private final ExeMode plugin;
-
     public exekick(ExeMode plugin) {
-        this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
+            @NotNull String[] args) {
         if (!sender.hasPermission("exemode.kick")) {
             sender.sendMessage(messages.get("kick.no-permission"));
             return true;
@@ -46,7 +44,7 @@ public class exekick implements CommandExecutor {
                 .replace("%kicker%", sender.getName())
                 .replace("%reason%", kickReason)
                 .replace("%date%", new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date()));
-        
+
         target.kickPlayer(kickMessage);
 
         Bukkit.broadcastMessage(messages.get("kick.broadcast")

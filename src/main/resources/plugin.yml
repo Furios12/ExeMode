@@ -84,7 +84,30 @@ commands:
     description: remove home
     usage: /<command>
     permission: exemode.removehome
-
+  execheck:
+    description: check a player
+    usage: /<command> <player>
+    permission: exemode.check
+  execlearwarn:
+    description: clear warns of a player
+    usage: /<command> <player>
+    permission: exemode.clearwarn
+  exenote:
+    description: add a private note to a player
+    usage: /<command> <player> <note>
+    permission: exemode.note
+  exespy:
+    description: spy on a player's messages
+    usage: /<command>
+    permission: exemode.spy
+  exetempban:
+    description: tempban a player
+    usage: /<command> <player> <time> <reason>
+    permission: exemode.tempban
+  exetmute:
+    description: tempmute a player
+    usage: /<command> <player> <time> [reason]
+    permission: exemode.tempmute
 
 permissions:
   exemode.creative:

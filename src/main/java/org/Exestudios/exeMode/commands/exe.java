@@ -25,6 +25,13 @@ public class exe implements CommandExecutor {
             §e/exeunmute §7- unmute a player
             §e/sethome §7- Set your home location
             §e/home §7- Teleport to your home location
+            §e/removehome §7- Remove your home location
+            §e/execheck §7- Check a player's warnings and mutes
+            §e/execlearwarn §7- Clear all warnings for a player
+            §e/exenote §7- Add a note to a player's record
+            §e/exespy §7- Toggle spy mode for staff chat
+            §e/exetempban §7- Tempban a player
+            §e/exetmute §7- Tempmute a player
             §6§l====================
             """);
         return true;

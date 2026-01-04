@@ -78,6 +78,7 @@ mute.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
 mute.already-muted: "&c[ExeMode] %player% è già mutato!"
 mute.success-sender: "&a[ExeMode] Hai mutato %player% %reason%"
 mute.success-target: "&c[ExeMode] Sei stato mutato! %reason%"
+mute.chat-denied: "&c[ExeMode] Non puoi parlare mentre sei mutato!"
 
 
 fly.toggled: "&a[ExeMode] Volo impostato: %state%"
@@ -94,3 +95,31 @@ unwarn.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
 unwarn.no-warns: "&c[ExeMode] Questo giocatore non ha warns!"
 unwarn.broadcast: "&a[ExeMode] %player% ha ricevuto la rimozione di un warn da %staff% (Warns rimanenti: %remaining%)"
 unwarn.target: "&a[ExeMode] Il tuo warn è stato rimosso. Warns rimanenti: %remaining%"
+
+
+clearwarn.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+clearwarn.usage: "&c[ExeMode] Utilizzo: /execlearwarn <giocatore>"
+clearwarn.success: "&a[ExeMode] Hai rimosso tutti i warns di %player%"
+
+
+note.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+note.usage: "&c[ExeMode] Utilizzo: /exenote <giocatore> <messaggio>"
+note.added: "&a[ExeMode] Nota aggiunta con successo!"
+
+spy.console-not-supported: "&c[ExeMode] Il console non supporta questo comando!"
+spy.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+spy.toggled-on: "&a[ExeMode] Spying abilitato!"
+spy.toggled-off: "&a[ExeMode] Spying disabilitato!"
+
+tempban.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+tempban.usage: "&c[ExeMode] Utilizzo: /exetempban <giocatore> <tempo> <motivo>"
+tempban.success-sender: "&a[ExeMode] Hai bannato %player% per %time% %reason%"
+tempban.success-target: "&c&l✘ Sei stato bannato dal server ✘\n&r\n&7Bannato da: &c%staff%\n&7Motivo: &c%reason%\n&7Tempo: &c%time%\n&r\n&7Contatta il nostro staff per un appello"
+
+tempmute.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+tempmute.usage: "&c[ExeMode] Utilizzo: /exetempmute <giocatore> <tempo> <motivo>"
+tempmute.success-sender: "&a[ExeMode] Hai mutato %player% per %time% %reason%"
+tempmute.success-target: "&c[ExeMode] Sei stato mutato per %time%! \n Staff: %staff% \n Motivo: %reason%"
+tempmute.chat-muted: "&c[ExeMode] Sei stato mutato per %time%! \n Staff: %staff% \n Motivo: %reason%"
+tempmute.chat-remaining: "&c[ExeMode] Sei stato mutato per %time%! \n Staff: %staff% \n Motivo: %reason%"
+
