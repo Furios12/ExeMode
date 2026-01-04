@@ -18,20 +18,22 @@
 ## 🧾 Comandi disponibili
 
 === ExeMode Commands ===
-/exe - Mostra il messaggio di aiuto
-/exc - Passa alla modalità creativa
-/exs - Passa alla modalità sopravvivenza
-/exa - Passa alla modalità avventura
-/exsp - Passa alla modalità spettatore
-/exeban - Bana un giocatore
-/exeunban - Sbana un giocatore
-/exekick - Espelle un giocatore
-/exemute - Muta un giocatore
-/exeunmute - Smuta un giocatore
-/exewarn - Avvisa un giocatore
-/exeunwarn - Rimuove un avviso a un giocatore
-/exemsg - Invia un messaggio privato a un giocatore
-/exefly - Abilita/disabilita la modalità volo
+/exe  - Shows this help message
+/exec - Switch to creative mode
+/exes - Switch to survival mode
+/exea - Switch to adventure mode
+/exesp - Switch to spectator mode
+/exeban - Ban a player
+/exeunban - unban a player
+/exekick - kick a player
+/exemute - execute a command as a player
+/exewarn - warn a player
+/exemsg - send a message to a player
+/exeunwarn - unwarn a player
+/exeunmute - unmute a player
+/sethome - Set your home location
+/home - Teleport to your home location
+====================
 
 
 ---
@@ -44,22 +46,16 @@ Tutti i comandi di moderazione vengono loggati automaticamente su un canale Disc
 
 ## 📌 Compatibilità
 
-- ✅ **Minecraft 1.21.5**
-- ❌ Altre versioni non supportate
+- ✅ **Minecraft  1.16.5 - 1.21.8 **
+- ✅ **la 1.0.3 e stata testata anche in 1.21.11 e sembrerebbe abbia piena funzionalità 
+- ❌ Altre versioni precedenti alla 1.16.5 non sono supportate e potrebbero esserci bug maggiori
 
 ---
 
-## ⚠️ Nota Importante
-
-> La versione **1.0.2** è **l’ultima versione open-source**.  
-> Dalla **1.0.3**, **Exemode diventerà un progetto privato**.  
-> Il codice sorgente non sarà più disponibile pubblicamente.
-
----
 
 ## 🔗 Link utili
 
-- [📁 GitHub (fino alla 1.0.2)](https://github.com/Furios12/ExeMode)
+- [📁 GitHub)](https://github.com/Furios12/ExeMode)
 - [📞 Supporto Discord](https://discord.gg/dTdJtjD2VW)
 
 ---
