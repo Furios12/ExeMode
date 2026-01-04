@@ -33,7 +33,7 @@
 - /exeunmute - unmute a player
 - /sethome - Set your home location
 - /home - Teleport to your home location
-====================
+- ====================
 
 
 ---
