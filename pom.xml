@@ -6,7 +6,7 @@
 
     <groupId>org.Exestudios</groupId>
     <artifactId>ExeMode</artifactId>
-    <version>1.0.2 - Stable</version>
+    <version>1.0.3 - Stable</version>
     <packaging>jar</packaging>
 
     <name>ExeMode</name>
