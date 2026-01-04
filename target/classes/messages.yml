@@ -1,4 +1,4 @@
-# ExeMode Messages | Development by Exestudios (Copyright © 2025 ExeStudios aka Furios121 | All rights reserved)
+# ExeMode Messages | Development by Exestudios (Copyright © 2026 ExeStudios aka Furios121 | All rights reserved)
 
   #████████████████████████████████████████████
   #█▄─▄▄─█▄─▀─▄█▄─▄▄─█▄─▀█▀─▄█─▄▄─█▄─▄▄▀█▄─▄▄─█
@@ -42,3 +42,55 @@ no-home: "§c§lNon hai ancora impostato una home!"
 home-teleport: "§2§lTeletrasportato alla tua home!"
 home-removed: "§2§lHome rimossa con successo!"
 home-set: "§2§lHome impostata con successo!"
+
+
+warn.no-permission: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
+warn.usage: "§c[ExeMode] Utilizzo: /exewarn <giocatore> <motivo>"
+warn.player-not-found: "§c[ExeMode] Giocatore non trovato o non online!"
+warn.message: "§cSei stato ammonito da %warner%!\n§7Motivo: §c%reason%\n§7Questo è il tuo warn §c#%count%"
+warn.success: "§a[ExeMode] Hai avvisato con successo %player% (Warn #%count%)!"
+warn.broadcast: "§c[ExeMode] §7%player% è stato avvisato da %warner% (Warn #%count%)!"
+warn.broadcast-reason: "§c[ExeMode] §7Motivo: §c%reason% (Warn #%count%)"
+warn.error: "§c[ExeMode] Errore durante il salvataggio del warn!"
+
+
+
+
+unmute.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+unmute.usage: "&c[ExeMode] Utilizzo: /exeunmute <giocatore>"
+unmute.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
+unmute.not-muted: "&c[ExeMode] Questo giocatore non è mutato!"
+unmute.success-sender: "&a[ExeMode] Hai tolto il mute a %player%."
+unmute.success-target: "&a[ExeMode] Ti è stato tolto il mute dallo staff."
+
+
+msg.no-permission: "&c[ExeMode] Non hai il permesso di usare questo comando!"
+msg.usage: "&c[ExeMode] Utilizzo: /exemsg <giocatore> <messaggio>"
+msg.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
+msg.cannot-self: "&c[ExeMode] Non puoi inviarti un messaggio a te stesso!"
+msg.sent: "&7A te -> %target%: &f%message%"
+msg.received: "&7%sender% -> a te: &f%message%"
+
+
+mute.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+mute.usage: "&c[ExeMode] Utilizzo: /exemute <giocatore> [motivo]"
+mute.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
+mute.already-muted: "&c[ExeMode] %player% è già mutato!"
+mute.success-sender: "&a[ExeMode] Hai mutato %player% %reason%"
+mute.success-target: "&c[ExeMode] Sei stato mutato! %reason%"
+
+
+fly.toggled: "&a[ExeMode] Volo impostato: %state%"
+fly.state-on: "attivato"
+fly.state-off: "disattivato"
+fly.toggled-for: "&a[ExeMode] Volo per %player% impostato: %state%"
+fly-no-permission: "§cNon hai il permesso di utilizzare questo comando!"
+fly-player-not-found: "§cGiocatore non trovato!"
+
+
+unwarn.no-permission: "&c[ExeMode] Non hai il permesso di eseguire questo comando!"
+unwarn.usage: "&c[ExeMode] Utilizzo: /exeunwarn <giocatore>"
+unwarn.player-not-found: "&c[ExeMode] Giocatore non trovato o non online!"
+unwarn.no-warns: "&c[ExeMode] Questo giocatore non ha warns!"
+unwarn.broadcast: "&a[ExeMode] %player% ha ricevuto la rimozione di un warn da %staff% (Warns rimanenti: %remaining%)"
+unwarn.target: "&a[ExeMode] Il tuo warn è stato rimosso. Warns rimanenti: %remaining%"

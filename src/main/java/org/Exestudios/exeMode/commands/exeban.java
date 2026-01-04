@@ -71,7 +71,7 @@ public class exeban implements CommandExecutor {
                 plugin.getDiscordWebhook().sendWebhook("🔨 Ban Eseguito", description, 15158332); // Rosso
             }
         } catch (IOException e) {
-            plugin.getLogger().log(Level.SEVERE, "Impossibile salvare il file bans.yml per il giocatore " + playerName, e);
+            plugin.getLogger().log(Level.SEVERE, "Unable to save bans.yml file for player " + playerName, e);
             sender.sendMessage(messages.get("ban.error"));
             return true;
         }

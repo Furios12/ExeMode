@@ -24,7 +24,7 @@ public class PlayerJoinBanCheck implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         File banFile = new File(plugin.getDataFolder(), "bans.yml");
         if (!banFile.exists()) {
-            plugin.getLogger().warning("File bans.yml non trovato!");
+            plugin.getLogger().warning("bans.yml file not found, skipping ban check.");
             return;
         }
 
@@ -45,7 +45,7 @@ public class PlayerJoinBanCheck implements Listener {
                     .replace("%date%", formattedDate);
 
             event.disallow(PlayerLoginEvent.Result.KICK_BANNED, banMessage);
-            plugin.getLogger().info("Tentativo di accesso bloccato per il giocatore bannato: " + playerName);
+            plugin.getLogger().info("Login attempt blocked for banned player: " + playerName);
         }
     }
 }

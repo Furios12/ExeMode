@@ -6,19 +6,19 @@ authors: [Exestudios]
 description: A plugin for gamemode management
 
 commands:
-  exc:
+  exec:
     description: Switch to creative mode
     usage: /<command>
     permission: exemode.creative
-  exa:
+  exea:
     description: Switch to adventure mode
     usage: /<command>
     permission: exemode.adventure
-  exs:
+  exes:
     description: Switch to survival mode
     usage: /<command>
     permission: exemode.survival
-  exsp:
+  exesp:
     description: Switch to spectator mode
     usage: /<command>
     permission: exemode.spectator
@@ -27,7 +27,7 @@ commands:
     usage: /<command>
   exeban:
     description: ban a player from the server
-    usage: /exban <giocatore> <motivo>
+    usage: /exeban <giocatore> <motivo>
     permission: exemode.ban
     permission-message: "§c[ExeMode] Non hai il permesso di eseguire questo comando!"
     aliases: [eban, banplayer]
@@ -53,7 +53,7 @@ commands:
     description: Unwarn a player
     usage: /exeunwarn <giocatore>
     permission: exemode.unwarn
-  exesmg:
+  exemsg:
     description: Message a player
     usage: /<command> <giocatore> <messaggio>
     permission: exemode.smg

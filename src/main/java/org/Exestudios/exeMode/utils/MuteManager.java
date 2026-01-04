@@ -34,12 +34,12 @@ public class MuteManager {
                     muteFile.getParentFile().mkdirs();
                 }
                 if (!muteFile.createNewFile()) {
-                    logger.severe("Impossibile creare il file muted_players.yml");
+                    logger.severe("Unable to create muted_players.yml file");
                     return;
                 }
-                logger.info("File muted_players.yml creato con successo");
+                logger.info("Muted_players.yml file created successfully");
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Errore durante la creazione del file muted_players.yml", e);
+                logger.log(Level.SEVERE, "Error creating muted_players.yml file", e);
                 return;
             }
         }
@@ -55,7 +55,7 @@ public class MuteManager {
                     String reason = mutedSection.getString(uuidStr + ".reason", "Nessun motivo specificato");
                     mutedPlayers.put(uuid, reason);
                 } catch (IllegalArgumentException e) {
-                    logger.log(Level.WARNING, "UUID non valido trovato nel file: " + uuidStr, e);
+                    logger.log(Level.WARNING, "Invalid UUID found in file: " + uuidStr, e);
                 }
             }
         }
@@ -72,9 +72,9 @@ public class MuteManager {
         
         try {
             muteConfig.save(muteFile);
-            logger.info("File muted_players.yml salvato con successo");
+            logger.info("Muted_players.yml file saved successfully");
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Errore durante il salvataggio del file muted_players.yml", e);
+            logger.log(Level.SEVERE, "Error saving muted_players.yml file", e);
         }
     }
 

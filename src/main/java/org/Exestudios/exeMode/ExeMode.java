@@ -57,9 +57,11 @@ public final class ExeMode extends JavaPlugin {
         String webhookUrl = getConfig().getString("discord-webhook-url", "");
         if (!webhookUrl.isEmpty()) {
             this.discordWebhook = new DiscordWebhook(webhookUrl);
-            getLogger().info("Discord webhook configurato con successo!");
+            logColored(ANSI_YELLOW + "Discord webhook module successfully configured!");
+            logColored(ANSI_YELLOW + "Discord Webhook module Initialized!");
+
         } else {
-            getLogger().warning("URL del webhook Discord non configurato!");
+            getLogger().warning("Discord webhook URL not configured!");
         }
     }
 
@@ -90,7 +92,7 @@ public final class ExeMode extends JavaPlugin {
     logColored(ANSI_YELLOW + "     Author: Exestudios");
     logColored(ANSI_YELLOW + "     Premium: No");
     logColored(ANSI_GREEN + "----------------------------------------------");
-    logColored(ANSI_CYAN + "Need help? Visit: https://github.com/Furios12/ExeMode/wiki (Not available yet)");
+    //logColored(ANSI_CYAN + "Need help? Visit: https://github.com/Furios12/ExeMode/wiki (Not available yet)");
     logColored(ANSI_CYAN + "Found a bug? Report it: https://github.com/Furios12/ExeMode/issues");
     logColored(ANSI_GREEN + "----------------------------------------------");
 }
@@ -103,18 +105,18 @@ public DiscordWebhook getDiscordWebhook() {
 private void logStartupStep(String step, Runnable action) {
     logColored(ANSI_YELLOW + "⚙ " + step + "...");
     action.run();
-    logColored(ANSI_GREEN + "✓ " + step + "| completed");
+    logColored(ANSI_GREEN + "✓ " + step + " | completed");
 }
 
     private void registerCommands() {
-        Objects.requireNonNull(this.getCommand("exc")).setExecutor(new exc());
-        Objects.requireNonNull(this.getCommand("exa")).setExecutor(new exa());
-        Objects.requireNonNull(this.getCommand("exsp")).setExecutor(new exsp());
-        Objects.requireNonNull(this.getCommand("exs")).setExecutor(new exs());
+        Objects.requireNonNull(this.getCommand("exec")).setExecutor(new exec());
+        Objects.requireNonNull(this.getCommand("exea")).setExecutor(new exea());
+        Objects.requireNonNull(this.getCommand("exesp")).setExecutor(new exesp());
+        Objects.requireNonNull(this.getCommand("exes")).setExecutor(new exes());
         Objects.requireNonNull(this.getCommand("exe")).setExecutor(new exe());
         Objects.requireNonNull(this.getCommand("exemute")).setExecutor(new exemute(this));
         Objects.requireNonNull(this.getCommand("exeunmute")).setExecutor(new exeunmute(this));
-        Objects.requireNonNull(this.getCommand("exesmg")).setExecutor(new exesmg());
+        Objects.requireNonNull(this.getCommand("exemsg")).setExecutor(new exemsg());
         Objects.requireNonNull(this.getCommand("exeban")).setExecutor(new exeban(this));
         Objects.requireNonNull(this.getCommand("exeunban")).setExecutor(new exeunban(this));
         Objects.requireNonNull(this.getCommand("exeupdate")).setExecutor(new exeupdate(this));
@@ -145,7 +147,7 @@ private void logStartupStep(String step, Runnable action) {
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(), this);
         this.homeManager = new HomeManager(getDataFolder());
         logColored(ANSI_BLUE + "ExeMode " + CURRENT_VERSION + " Loading Extensions...");
-        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions active: ChatColor, EssentialsChat");
+        logColored(ANSI_CYAN + "ExeMode " + CURRENT_VERSION + " Extensions Ready to use: ChatColor, EssentialsChat");
     }
 
     public MuteManager getMuteManager() {
@@ -176,7 +178,7 @@ private void logStartupStep(String step, Runnable action) {
             } catch (Exception e) {
                 getLogger().warning("Update Error: " + e.getMessage());
                 if (player != null) {
-                    player.sendMessage(ChatColor.RED + "(Update Error) Errore durante il controllo degli aggiornamenti. Controlla la console per i dettagli.");
+                    player.sendMessage(ChatColor.RED + "(Update Error) Error checking for updates. Check the console for details");
                 }
             }
         });
@@ -189,7 +191,7 @@ private void logStartupStep(String step, Runnable action) {
         conn.setRequestProperty("Accept", "application/json");
 
         if (conn.getResponseCode() != 200) {
-            throw new IOException("Impossibile controllare gli aggiornamenti. Codice risposta: " + conn.getResponseCode());
+            throw new IOException("Unable to check for updates. Response code: " + conn.getResponseCode());
         }
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
@@ -211,24 +213,12 @@ private void logStartupStep(String step, Runnable action) {
 
 private void sendUpdateMessage(Player player, UpdateResult result) {
     if (result.updateAvailable) {
-        player.sendMessage(ChatColor.GREEN + """
-            ╔════════════════════════════════════╗
-            ║         UPDATE AVAILABLE!          ║
-            ╠════════════════════════════════════╣
-            ║  Current: %s%s
-            ║  Latest:  %s%s
-            ║  Download: %s%s
-            ╚════════════════════════════════════╝""".formatted(
-                ChatColor.RED, CURRENT_VERSION,
-                ChatColor.GREEN, result.latestVersion,
-                ChatColor.AQUA, result.downloadUrl));
+        player.sendMessage(ChatColor.YELLOW + "Warning: A new update for ExeMode is available!");
+        player.sendMessage(ChatColor.GREEN + "current version: " + ChatColor.RED + CURRENT_VERSION);
+        player.sendMessage(ChatColor.GREEN + "latest version: " + ChatColor.GREEN + result.latestVersion);
+        player.sendMessage(ChatColor.AQUA + "Download it here: " + ChatColor.UNDERLINE + result.downloadUrl);
     } else {
-        player.sendMessage(ChatColor.GREEN + """
-            ╔════════════════════════════════════╗
-            ║      EXEMODE IS UP TO DATE!        ║
-            ╠════════════════════════════════════╣
-            ║  Current Version: %s               ║
-            ╚════════════════════════════════════╝""".formatted(CURRENT_VERSION));
+        player.sendMessage(ChatColor.GREEN + "ExeMode is up to date! Thank you for keeping your plugin updated.");
     }
 }
 
@@ -243,37 +233,90 @@ private void sendUpdateMessage(Player player, UpdateResult result) {
 
     private void verifyRequiredMessages() {
         logColored(ANSI_BLUE + "Checking required messages:");
+
         String[] requiredMessages = {
-                "ban.message",
-                "ban.broadcast",
-                "ban.broadcast-reason",
+                "Config Version",
                 "no-player",
                 "no-permission",
                 "gamemode-creative",
                 "gamemode-survival",
                 "gamemode-adventure",
                 "gamemode-spectator",
+
                 "ban.no-permission",
                 "ban.message",
                 "ban.broadcast",
                 "ban.broadcast-reason",
                 "ban.error",
                 "ban.usage",
+
                 "unban.no-permission",
                 "unban.usage",
                 "unban.not-banned",
                 "unban.broadcast",
                 "unban.error",
                 "unban.success",
+
                 "kick.no-permission",
                 "kick.usage",
                 "kick.player-not-found",
                 "kick.message",
                 "kick.broadcast",
                 "kick.broadcast-reason",
+
                 "player.join",
-                "player.quit"
+                "player.quit",
+
+                "no-home",
+                "home-teleport",
+                "home-removed",
+                "home-set",
+
+                "warn.no-permission",
+                "warn.usage",
+                "warn.player-not-found",
+                "warn.message",
+                "warn.success",
+                "warn.broadcast",
+                "warn.broadcast-reason",
+                "warn.error",
+
+                "unmute.no-permission",
+                "unmute.usage",
+                "unmute.player-not-found",
+                "unmute.not-muted",
+                "unmute.success-sender",
+                "unmute.success-target",
+
+                "msg.no-permission",
+                "msg.usage",
+                "msg.player-not-found",
+                "msg.cannot-self",
+                "msg.sent",
+                "msg.received",
+
+                "mute.no-permission",
+                "mute.usage",
+                "mute.player-not-found",
+                "mute.already-muted",
+                "mute.success-sender",
+                "mute.success-target",
+
+                "fly.toggled",
+                "fly.state-on",
+                "fly.state-off",
+                "fly.toggled-for",
+                "fly-no-permission",
+                "fly-player-not-found",
+
+                "unwarn.no-permission",
+                "unwarn.usage",
+                "unwarn.player-not-found",
+                "unwarn.no-warns",
+                "unwarn.broadcast",
+                "unwarn.target"
         };
+
 
         for (String path : requiredMessages) {
             if (messages.exists(path)) {
@@ -293,11 +336,11 @@ private void sendUpdateMessage(Player player, UpdateResult result) {
         logColored(ANSI_YELLOW + "     State: Disabling");
         logColored(ANSI_YELLOW + "----------------------------------------------");
 
-    logShutdownStep("Saving warn data", () -> {
+    logShutdownStep(" Saving warn data", () -> {
         if (warnManager != null) warnManager.saveWarnFile();
     });
 
-    logShutdownStep("Saving mute data", () -> {
+    logShutdownStep( " Saving mute data", () -> {
         if (muteManager != null) muteManager.saveMutedPlayers();
     });
 
@@ -329,13 +372,14 @@ private void logShutdownStep(String step, Runnable action) {
             String fileVersion = messagesConfig.getString("Config Version");
 
             if (fileVersion == null || !fileVersion.equals(currentVersion)) {
-                getLogger().info("Rilevata una versione diversa del file messages.yml. Aggiornamento in corso...");
+                logColored(ANSI_BLUE + "Updated version of messages.yml file found! Update in progress...");
+
 
                 if (messagesFile.delete()) {
                     saveResource("messages.yml", true);
-                    getLogger().info("File messages.yml aggiornato alla versione " + currentVersion);
+                    logColored(ANSI_GREEN + "messages.yml updated to version: " + currentVersion);
                 } else {
-                    getLogger().warning("Impossibile eliminare il vecchio file messages.yml. L'aggiornamento potrebbe non essere completato correttamente.");
+                    getLogger().warning("Unable to delete old messages.yml file. The update may not complete successfully.");
                 }
             }
         }

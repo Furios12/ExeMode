@@ -51,12 +51,12 @@ public class DiscordWebhook {
 
             int responseCode = connection.getResponseCode();
             if (responseCode != 204) {
-                logger.warning("Discord webhook ha restituito il codice: " + responseCode);
+                logger.warning("Discord webhook returned code: " + responseCode);
             }
 
             connection.disconnect();
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Errore nell'invio del webhook Discord", e);
+            logger.log(Level.WARNING, "Error sending Discord webhook", e);
         }
     }
 

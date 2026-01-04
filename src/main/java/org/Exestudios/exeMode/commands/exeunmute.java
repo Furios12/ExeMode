@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.Exestudios.exeMode.ExeMode;
+import org.Exestudios.exeMode.utils.messages;
 import org.jetbrains.annotations.NotNull;
 
 public class exeunmute implements CommandExecutor {
@@ -16,32 +17,38 @@ public class exeunmute implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
+                             @NotNull String label, @NotNull String[] args) {
+        if (!sender.hasPermission("exemode.unmute")) {
+            sender.sendMessage(messages.get("unmute.no-permission"));
+            return true;
+        }
+
         if (args.length < 1) {
-            sender.sendMessage("§c§lUso: /unmute <giocatore>");
+            sender.sendMessage(messages.get("unmute.usage"));
             return true;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
         if (target == null) {
-            sender.sendMessage("§c§lGiocatore non trovato!");
+            sender.sendMessage(messages.get("unmute.player-not-found"));
             return true;
         }
 
         if (!plugin.getMuteManager().isMuted(target.getUniqueId())) {
-            sender.sendMessage("§c§lQuesto giocatore non è mutato!");
+            sender.sendMessage(messages.get("unmute.not-muted"));
             return true;
         }
 
-plugin.getMuteManager().unmutePlayer(
-    target.getUniqueId(),
-    target.getName(),
-    sender.getName()
-);
-        
-        sender.sendMessage("§a§lHai smutato " + target.getName());
-        target.sendMessage("§a§lNon sei più mutato nella chat");
-        
+        plugin.getMuteManager().unmutePlayer(
+            target.getUniqueId(),
+            target.getName(),
+            sender.getName()
+        );
+
+        sender.sendMessage(messages.get("unmute.success-sender").replace("%player%", target.getName()));
+        target.sendMessage(messages.get("unmute.success-target"));
+
         return true;
     }
 }

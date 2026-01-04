@@ -32,7 +32,7 @@ public class WarnManager {
         try {
             warnConfig.save(warnFile);
         } catch (IOException e) {
-            plugin.getLogger().severe("Impossibile salvare warn.yml: " + e.getMessage());
+            plugin.getLogger().severe("Failed to save warn.yml: " + e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class WarnManager {
         if (plugin.getDiscordWebhook() != null && warnConfig.contains("players." + playerUUID + ".name")) {
             String playerName = warnConfig.getString("players." + playerUUID + ".name");
             String description = String.format("**Giocatore:** %s\n**Warn rimosso con successo**", playerName);
-            plugin.getDiscordWebhook().sendWebhook("Warn Rimosso", description, 5763719); // Colore verde
+            plugin.getDiscordWebhook().sendWebhook("Warn Rimosso", description, 5763719);
         }
 
         saveWarnFile();

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class exs implements CommandExecutor {
+public class exesp implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
@@ -16,13 +16,13 @@ public class exs implements CommandExecutor {
             return true;
         }
 
-        if (!player.hasPermission("exemode.survival")) {
+        if (!player.hasPermission("exemode.spectator")) {
             sender.sendMessage(messages.get("no-permission"));
             return true;
         }
 
-        player.setGameMode(GameMode.SURVIVAL);
-        player.sendMessage(messages.get("gamemode-survival"));
+        player.setGameMode(GameMode.SPECTATOR);
+        player.sendMessage(messages.get("gamemode-spectator"));
         return true;
     }
 }
