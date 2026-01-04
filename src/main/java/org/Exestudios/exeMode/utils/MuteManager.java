@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class MuteManager {
     private final File muteFile;
-    private final Map<UUID, String> mutedPlayers; // UUID -> motivo
+    private final Map<UUID, String> mutedPlayers;
     private final Logger logger;
     private final ExeMode plugin;
 
@@ -95,7 +95,7 @@ public class MuteManager {
         if (plugin.getDiscordWebhook() != null) {
             String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Motivo:** %s", 
                 playerName, staffMember, finalReason);
-            plugin.getDiscordWebhook().sendWebhook("Nuovo Mute", description, 15158332); // Colore rosso
+            plugin.getDiscordWebhook().sendWebhook("Nuovo Mute", description, 15158332);
         }
     }
 
@@ -103,7 +103,7 @@ public class MuteManager {
         if (mutedPlayers.remove(playerUUID) != null && plugin.getDiscordWebhook() != null) {
             String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Mute rimosso con successo**", 
                 playerName, staffMember);
-            plugin.getDiscordWebhook().sendWebhook("Unmute", description, 5763719); // Colore verde
+            plugin.getDiscordWebhook().sendWebhook("Unmute", description, 5763719);
         }
         saveMutedPlayers();
     }

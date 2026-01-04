@@ -71,7 +71,7 @@ public class exeunban implements CommandExecutor {
                     originalBanner,
                     originalReason,
                     currentDate);
-                plugin.getDiscordWebhook().sendWebhook("🔓 Ban Rimosso", description, 5763719); // Verde
+                plugin.getDiscordWebhook().sendWebhook("🔓 Ban Rimosso", description, 5763719);
             }
 
             sender.sendMessage(messages.get("unban.success")

@@ -1,4 +1,3 @@
-// File: src/main/java/org/Exestudios/exeMode/commands/removehome.java
 package org.Exestudios.exeMode.commands;
 
 import org.Exestudios.exeMode.utils.HomeManager;

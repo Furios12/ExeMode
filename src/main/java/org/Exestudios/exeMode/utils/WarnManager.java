@@ -56,7 +56,7 @@ public class WarnManager {
         if (plugin.getDiscordWebhook() != null) {
             String description = String.format("**Giocatore:** %s\n**Staff:** %s\n**Motivo:** %s", 
                 playerName, staffMember, reason);
-            plugin.getDiscordWebhook().sendWebhook("Nuovo Warn", description, 16776960); // Colore giallo
+            plugin.getDiscordWebhook().sendWebhook("Nuovo Warn", description, 16776960);
         }
 
         saveWarnFile();

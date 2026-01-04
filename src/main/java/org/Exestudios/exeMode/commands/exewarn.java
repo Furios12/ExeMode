@@ -49,20 +49,20 @@ public class exewarn implements CommandExecutor {
 
         int warnCount = plugin.getWarnManager().getWarnsCount(target.getUniqueId());
 
-        // Messaggio al giocatore ammonito
+
         target.sendMessage(messages.get("warn.message")
                 .replace("%warner%", sender.getName())
                 .replace("%reason%", reasonStr)
                 .replace("%count%", String.valueOf(warnCount))
         );
 
-        // Messaggio al mittente (conferma)
+
         sender.sendMessage(messages.get("warn.success")
                 .replace("%player%", target.getName())
                 .replace("%count%", String.valueOf(warnCount))
         );
 
-        // Broadcast pubblico
+
         Bukkit.broadcastMessage(messages.get("warn.broadcast")
                 .replace("%player%", target.getName())
                 .replace("%warner%", sender.getName())
