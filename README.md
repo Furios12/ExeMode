@@ -18,21 +18,21 @@
 ## 🧾 Comandi disponibili
 
 === ExeMode Commands ===
-/exe  - Shows this help message
-/exec - Switch to creative mode
-/exes - Switch to survival mode
-/exea - Switch to adventure mode
-/exesp - Switch to spectator mode
-/exeban - Ban a player
-/exeunban - unban a player
-/exekick - kick a player
-/exemute - execute a command as a player
-/exewarn - warn a player
-/exemsg - send a message to a player
-/exeunwarn - unwarn a player
-/exeunmute - unmute a player
-/sethome - Set your home location
-/home - Teleport to your home location
+- /exe  - Shows this help message
+- /exec - Switch to creative mode
+- /exes - Switch to survival mode
+- /exea - Switch to adventure mode
+- /exesp - Switch to spectator mode
+- /exeban - Ban a player
+- /exeunban - unban a player
+- /exekick - kick a player
+- /exemute - execute a command as a player
+- /exewarn - warn a player
+- /exemsg - send a message to a player
+- /exeunwarn - unwarn a player
+- /exeunmute - unmute a player
+- /sethome - Set your home location
+- /home - Teleport to your home location
 ====================
 
 
